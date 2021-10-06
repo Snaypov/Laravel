@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,4 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainController::class, 'index']);
 Route::get('/contacts', [MainController::class, 'contacts']);
+Route::get('/contact/{id}', [MainController::class, 'showContacts']);
 Route::post('get-contacts', [MainController::class, 'getContacts']);
+Route::post('/set-review', [ReviewController::class, 'setReview']);
+Route::get('/review', [ReviewController::class, 'index']);

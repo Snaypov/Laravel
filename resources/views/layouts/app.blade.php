@@ -18,6 +18,9 @@
             <li class="nav-item">
                 <a href="/contacts" class="nav-link">Contacts</a>
             </li>
+            <li class="nav-item">
+                <a href="/review" class="nav-link">Review</a>
+            </li>
         </ul>
     </nav>
     @yield('content')
