@@ -33,13 +33,20 @@
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="{{url('admin')}}" class="nav-link active" aria-current="page">
+                    <a href="{{url('admin')}}" class="nav-link" aria-current="page">
                         Home
                     </a>
-                </li><li class="nav-item">
-                    <a href="{{route('category.index')}}" class="nav-link text-white" aria-current="page">
+                </li>
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         Categories
                     </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('category.index') }}">
+                            All Categories
+                        </a>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -108,5 +115,4 @@
         </div>
     </div>
 </body>
-
 </html>
