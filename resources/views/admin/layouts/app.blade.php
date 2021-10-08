@@ -46,6 +46,9 @@
                         <a class="dropdown-item" href="{{ route('category.index') }}">
                             All Categories
                         </a>
+                        <a class="dropdown-item" href="{{ route('category.create') }}">
+                            Create Category
+                        </a>
                     </div>
                 </li>
             </ul>

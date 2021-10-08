@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -26,7 +28,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.create-category');
     }
 
     /**
@@ -40,8 +42,21 @@ class CategoryController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:100', 'unique:categories'],
             'slug' => ['required', 'string', 'min:3', 'max:100', 'unique:categories'],
-            'context' => ['string', 'min:3'],
+            'content' => ['string',  'nullable'],
+            'img' => ['string', 'nullable'],
         ]);
+
+        
+        DB::table('categories')->insert([
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'content' => $request->content,
+            'img' => $request->img,
+        ]);
+        
+        $category = Category::all();
+        return view('admin.categories', compact('category'));
+        // return redirect('/admin');
     }
 
     /**
@@ -63,7 +78,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -75,7 +90,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
@@ -86,6 +101,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }
