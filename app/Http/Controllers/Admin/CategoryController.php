@@ -56,7 +56,6 @@ class CategoryController extends Controller
         
         $category = Category::all();
         return view('admin.categories', compact('category'));
-        // return redirect('/admin');
     }
 
     /**
@@ -67,7 +66,6 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -78,7 +76,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-
+        $category = Category::all()->where('id', '=', $id);
+        return view('admin.edit-category', compact('category'));
     }
 
     /**
@@ -90,7 +89,23 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:100'],
+            'slug' => ['required', 'string', 'min:3', 'max:100'],
+            'content' => ['string',  'nullable'],
+            'img' => ['string', 'nullable'],
+        ]);
 
+        DB::table('categories')->where('id', '=', $id)->update([
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'content' => $request->content,
+            'img' => $request->img,
+        ]);
+
+        $category = Category::all();
+        return view('admin.categories', compact('category'));
+        // return route('category.index');
     }
 
     /**
@@ -101,6 +116,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        
+        DB::table('categories')->where('id', '=', $id)->delete();
+
+        return redirect()->back();
     }
 }
