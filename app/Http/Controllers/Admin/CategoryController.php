@@ -54,8 +54,10 @@ class CategoryController extends Controller
             'img' => $request->img,
         ]);
         
-        $category = Category::all();
-        return view('admin.categories', compact('category'));
+        // $category = Category::all();
+        // return view('admin.categories', compact('category'));
+
+        return redirect(route('category.index'));
     }
 
     /**
@@ -103,9 +105,8 @@ class CategoryController extends Controller
             'img' => $request->img,
         ]);
 
-        $category = Category::all();
-        return view('admin.categories', compact('category'));
-        // return route('category.index');
+       
+        return redirect(route('category.index'));
     }
 
     /**

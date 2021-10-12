@@ -28,6 +28,6 @@ use Illuminate\Support\Facades\Route;
 // Auth::routes();
 require __DIR__.'/auth.php';
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('admin', [AdminController::class, 'dashboard']);
+Route::get('admin', [AdminController::class, 'dashboard'])->middleware(['auth']);
 
 Route::resource('admin/category', CategoryController::class);
