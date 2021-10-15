@@ -8,15 +8,18 @@
                 <th>Slug</th>
                 <th>Content</th>
                 <th>Img</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach ($category as $item)
                 <tr>
-                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->name }}  ({{$item->products}})</td>
                     <td>{{ $item->slug }}</td>
                     <td>{{ $item->content }}</td>
-                    <td style="background-image: url({{$item->img}}); background-size: cover;"></td> 
+                    <td>
+                        <img src="{{asset($item->img)}}" style="width: 100px; height: 100px;" alt="">
+                    </td> 
                     <td>
                         <form action="{{ route('category.edit', $item->id) }}">
                             @csrf
@@ -34,4 +37,6 @@
             @endforeach
         </tbody>
     </table>
+
+    {{$category->links()}}
 @endsection

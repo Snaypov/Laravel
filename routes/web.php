@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,11 @@ use Illuminate\Support\Facades\Route;
 // Auth::routes();
 require __DIR__.'/auth.php';
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('admin', [AdminController::class, 'dashboard'])->middleware(['auth']);
 
-Route::resource('admin/category', CategoryController::class);
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function(){
+    Route::get('/', [AdminController::class, 'dashboard']);
+    Route::resource('category', CategoryController::class);
+    Route::resource('products', ProductController::class);
+});
+
+

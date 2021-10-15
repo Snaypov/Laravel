@@ -1,7 +1,22 @@
 @extends('admin.layouts.app')
 
 @section('content')
-    @foreach ($category as $item)
+    @include('admin.layouts._messages')
+        {!! Form::model($category, ['route' => ['category.update', $category->id], 'files' => true]) !!}
+            
+        @method('PUT')
+        <div class="form-group">
+            @include('admin.categor._form')
+            <div class="row">
+                <div class="text-center" style="margin: 0 auto; padding-top: 20px">
+                    <button class="btn btn-primary text-center" style="width: 80px;">Send</button>
+                </div>
+            </div>
+        </div>
+        {!! Form::close() !!}
+
+
+    {{-- @foreach ($category as $item)
         <form action="{{ route('category.update', $item->id) }}" method="POST">
             @csrf
             @method('PUT')
@@ -35,5 +50,5 @@
                 </div>
             </div>
         </form>
-    @endforeach
+    @endforeach --}}
 @endsection

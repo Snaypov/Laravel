@@ -17,8 +17,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::all();
-        return view('admin.categories', compact('category'));
+        $category = Category::paginate(4);
+        return view('admin.categor.categories', compact('category'));
     }
 
     /**
@@ -28,7 +28,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.create-category');
+        return view('admin.categor.create-category');
     }
 
     /**
@@ -39,23 +39,26 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:100', 'unique:categories'],
             'slug' => ['required', 'string', 'min:3', 'max:100', 'unique:categories'],
             'content' => ['string',  'nullable'],
-            'img' => ['string', 'nullable'],
         ]);
 
         
-        DB::table('categories')->insert([
-            'name' => $request->name,
-            'slug' => $request->slug,
-            'content' => $request->content,
-            'img' => $request->img,
-        ]);
-        
-        // $category = Category::all();
-        // return view('admin.categories', compact('category'));
+        // DB::table('categories')->insert([
+        //     'name' => $request->name,
+        //     'slug' => $request->slug,
+        //     'content' => $request->content,
+        //     'img' => $request->img,
+        // ]);
+
+        $category = Category::create($validated);
+        $file = $request->file('img');
+        if($file){
+            $category->img = 'uploads/'. $file->store('/', 'uploads');
+            $category->save();
+        }
 
         return redirect(route('category.index'));
     }
@@ -78,8 +81,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::all()->where('id', '=', $id);
-        return view('admin.edit-category', compact('category'));
+        $category = Category::where('id', '=', $id)->first();
+        // dd($category);
+        return view('admin.categor.edit-category', compact('category'));
     }
 
     /**
@@ -92,8 +96,8 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:100'],
-            'slug' => ['required', 'string', 'min:3', 'max:100'],
+            'name' => ['required|unique:categories,name,'.$id, 'string', 'min:3', 'max:100'],
+            'slug' => ['required|unique:categories,slug,'.$id, 'string', 'min:3', 'max:100'],
             'content' => ['string',  'nullable'],
             'img' => ['string', 'nullable'],
         ]);
